@@ -1,0 +1,512 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link type="text/css" href="./sources/pages.css" media="all" rel="stylesheet">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <style>
+        table {
+            font-family: arial, sans-serif;
+            border-collapse: collapse;
+            width: 60%;
+        }
+
+        .center {
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .separate {
+            margin: 0 auto;
+            width: 60%;
+        }
+
+        td, th {
+            border: 1px solid #dddddd;
+            text-align: left;
+            padding: 8px;
+        }
+
+        tr:nth-child(even) {
+            background-color: #dddddd;
+        }
+    </style>
+    <style type="text/css">#htmlToothbrush #bodyToothbrush .parentToothbrush .bilibili-player-video {
+        margin: 0 !important;
+    }
+
+    #htmlToothbrush, #bodyToothbrush {
+        overflow: hidden !important;
+        zoom: 100% !important;
+    }
+
+    #htmlToothbrush #bodyToothbrush .parentToothbrush {
+        overflow: visible !important;
+        z-index: auto !important;
+        transform: none !important;
+        -webkit-transform-style: flat !important;
+        transition: none !important;
+        contain: none !important;
+    }
+
+    #htmlToothbrush #bodyToothbrush .absoluteToothbrush {
+        position: absolute !important;
+    }
+
+    #htmlToothbrush #bodyToothbrush .playerToothbrush {
+        position: fixed !important;
+        top: 0px !important;
+        left: 0px !important;
+        width: 100vw !important;
+        height: 100vh !important;
+        max-width: none !important;
+        max-height: none !important;
+        min-width: 0 !important;
+        min-height: 0 !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        z-index: 2147483646 !important;
+        border: none !important;
+        background-color: #000 !important;
+        transform: none !important;
+    }
+
+    #htmlToothbrush #bodyToothbrush .parentToothbrush video {
+        object-fit: contain !important;
+    }
+
+    #htmlToothbrush #bodyToothbrush .parentToothbrush .videoToothbrush {
+        width: 100vw !important;
+        height: 100vh !important;
+    }
+
+    #playerControlBtn {
+        text-shadow: none;
+        visibility: hidden;
+        opacity: 0;
+        display: none;
+        transition: all 0.5s ease;
+        cursor: pointer;
+        font: 12px "微软雅黑";
+        margin: 0;
+        width: 64px;
+        height: 20px;
+        line-height: 20px;
+        border: none;
+        text-align: center;
+        position: fixed;
+        z-index: 2147483647;
+        background-color: #27A9D8;
+        color: #FFF;
+    }
+
+    #playerControlBtn:hover {
+        visibility: visible;
+        opacity: 1;
+        background-color: #2774D8;
+    }
+
+    #picinpicBtn {
+        text-shadow: none;
+        visibility: hidden;
+        opacity: 0;
+        display: none;
+        transition: all 0.5s ease;
+        cursor: pointer;
+        font: 12px "微软雅黑";
+        margin: 0;
+        width: 53px;
+        height: 20px;
+        line-height: 20px;
+        border: none;
+        text-align: center;
+        position: fixed;
+        z-index: 2147483647;
+        background-color: #27A9D8;
+        color: #FFF;
+    }
+
+    #picinpicBtn:hover {
+        visibility: visible;
+        opacity: 1;
+        background-color: #2774D8;
+    }
+
+    #leftFullStackButton {
+        display: none;
+        position: fixed;
+        width: 1px;
+        height: 100vh;
+        top: 0;
+        left: 0;
+        z-index: 2147483647;
+        background: #000;
+    }
+
+    #rightFullStackButton {
+        display: none;
+        position: fixed;
+        width: 1px;
+        height: 100vh;
+        top: 0;
+        right: 0;
+        z-index: 2147483647;
+        background: #000;
+    }</style>
+    <script id="picviewer-page-script">(function (messageID) {
+        var frameID = Math.random();
+        var frames = {
+            top: window.top,
+        };
+
+        window.addEventListener('message', function (e) {
+            var data = e.data;
+            if (!data || !data.messageID || data.messageID != messageID) return;//通信ID认证
+            var source = e.source;
+            if (source === window) {//来自contentscript,发送出去,或者干嘛。
+                if (data.to) {
+                    data.from = frameID;
+                    frames[data.to].postMessage(data, '*');
+                } else {
+                    switch (data.command) {
+                        case 'getIframeObject': {
+                            var frameWindow = frames[data.windowId];
+                            var iframes = document.getElementsByTagName('iframe');
+                            var iframe;
+                            var targetIframe;
+                            for (var i = iframes.length - 1; i >= 0; i--) {
+                                iframe = iframes[i];
+                                if (iframe.contentWindow === frameWindow) {
+                                    targetIframe = iframe;
+                                    break;
+                                }
+                                ;
+                            }
+                            ;
+                            var cusEvent = document.createEvent('CustomEvent');
+                            cusEvent.initCustomEvent('pv-getIframeObject', false, false, targetIframe);
+                            document.dispatchEvent(cusEvent);
+                        }
+                            break;
+                    }
+                    ;
+                }
+                ;
+
+            } else {//来自别的窗口的，contentscript可以直接接收，这里保存下来自的窗口的引用
+                frames[data.from] = source;
+            }
+            ;
+        }, true)
+    })("pv-0.5106795670312598")</script>
+    <style type="text/css">* {
+        text-shadow: transparent 0px 0px 0px, rgba(0, 0, 0, 0.8) 0px 0px 0px !important;
+    }</style>
+</head>
+<body>
+
+<section id="hero-spot" class="hero-spot">
+    <h2>&VeryThinSpace;</h2>
+    <h1><strong>INGAN DEMO</strong></h1>
+    <h2>&VeryThinSpace;</h2>
+    <h2></h2>
+    <br>
+    <br>
+</section>
+<br>
+<br>
+<p></p>
+<h2 class="separate" style="color:#1196EE">Abstract</h2>
+<br>
+<h3 class="separate">
+    &nbsp;&nbsp;&nbsp;&nbsp;Voice Conversion(VC) has received a lot of attention and research, especially in zero-shot many-to-many voice
+    conversion. Recently, AdaIN-VC has implemented one-hot conversion by a variational autoencoder framework with
+    content and timbre encoders, but the framework does not convert well in the face of unseen speakers. In this paper,
+    we use instance normalization to complete the separation of timbre and content and introduce a generative
+    adversarial network to synthesize the new speech. We use speaker embedding as the input of timbre to achieve
+    zero-shot voice conversion. We also use a multi-discriminator model to train adversarially on timbre and
+    reconstructed samples separately to enhance the conversion quality. Our experiments show that our framework has very
+    satisfying results on unseen speakers.
+</h3>
+<p></p>
+<br>
+<br>
+<!--<h1 class="separate" style="color:#1196EE;font-family:'Times New Roman'" align="center"><strong>VC DEMO</strong></h1>-->
+<h2 class="separate" style="color:#1196EE">Demo (Unseen Speakers: Audio samples are randomly picked from eval
+    dataset.)</h2>
+<h2></h2>
+<table class="center">
+
+
+    <tbody>
+    <tr>
+        <th>Source</th>
+        <th>Target</th>
+        <th>Conversion</th>
+    </tr>
+    <tr>
+        <td style="vertical-align: top"><p>p269</p>
+            <p>
+                <audio src="unseen/p269_363.wav" controls="" preload=""></audio>
+            </p>
+        </td>
+        <td style="vertical-align: top"><p>p316</p>
+            <p>
+                <audio src="unseen/p316_010.wav" controls="" preload=""></audio>
+            </p>
+        </td>
+        <td style="vertical-align: top">
+            <p>AutoVC</p>
+            <p>
+                <audio src="AutoVC/source_p269_target_p316.wav" controls="" preload=""></audio>
+            </p>
+            <p>VQVC+</p>
+            <p>
+                <audio src="VQVC/source_p269_target_p316.wav" controls="" preload=""></audio>
+            </p>
+            <p>AdaIN-VC</p>
+            <p>
+                <audio src="AdaINVC/source_p269_target_p316.wav" controls="" preload=""></audio>
+            </p>
+            <p>INGAN</p>
+            <p>
+                <audio src="INGAN/source_p269_target_p316.wav" controls="" preload=""></audio>
+            </p>
+        </td>
+    </tr>
+    <tr>
+        <td style="vertical-align: top"><p>p308</p>
+            <p>
+                <audio src="unseen/p308_355.wav" controls="" preload=""></audio>
+            </p>
+        </td>
+        <td style="vertical-align: top"><p>p275</p>
+            <p>
+                <audio src="unseen/p275_025.wav" controls="" preload=""></audio>
+            </p>
+        </td>
+        <td style="vertical-align: top">
+            <p>AutoVC</p>
+            <p>
+                <audio src="AutoVC/source_p308_target_p275.wav" controls=""
+                       preload=""></audio>
+            </p>
+            <p>VQVC+</p>
+            <p>
+                <audio src="VQVC/source_p308_target_p275.wav" controls=""
+                       preload=""></audio>
+            </p>
+            <p>AdaINVC</p>
+            <p>
+                <audio src="AdaINVC/source_p308_target_p275.wav" controls=""
+                       preload=""></audio>
+            </p>
+            <p>INGAN</p>
+            <p>
+                <audio src="INGAN/source_p308_target_p275.wav" controls=""
+                       preload=""></audio>
+            </p>
+        </td>
+    </tr>
+    <tr>
+        <td style="vertical-align: top">
+            <p>p314</p>
+            <p>
+                <audio src="unseen/p314_395.wav" controls="" preload=""></audio>
+            </p>
+        </td>
+        <td style="vertical-align: top">
+            <p>p308</p>
+            <p>
+                <audio src="unseen/p308_008.wav" controls="" preload=""></audio>
+            </p>
+        </td>
+        <td style="vertical-align: top">
+            <p>AutoVC</p>
+            <p>
+                <audio src="AutoVC/source_p314_target_p308.wav" controls="" preload=""></audio>
+            </p>
+            <p>VQVC+</p>
+            <p>
+                <audio src="VQVC/source_p314_target_p308.wav" controls="" preload=""></audio>
+            </p>
+            <p>AdaINVC</p>
+            <p>
+                <audio src="AdaINVC/source_p314_target_p308.wav" controls="" preload=""></audio>
+            </p>
+            <p>INGAN</p>
+            <p>
+                <audio src="INGAN/source_p314_target_p308.wav" controls="" preload=""></audio>
+            </p>
+        </td>
+    </tr>
+    <tr>
+        <td style="vertical-align: top">
+            <p>p316</p>
+            <p>
+                <audio src="unseen/p316_230.wav" controls="" preload=""></audio>
+            </p>
+        </td>
+        <td style="vertical-align: top">
+            <p>p343</p>
+            <p>
+                <audio src="unseen/p343_032.wav" controls="" preload=""></audio>
+            </p>
+        </td>
+        <td style="vertical-align: top">
+            <p>AutoVC</p>
+            <p>
+                <audio src="AutoVC/source_p316_target_p343.wav" controls="" preload=""></audio>
+            </p>
+            <p>VQVC+</p>
+            <p>
+                <audio src="VQVC/source_p316_target_p343.wav" controls="" preload=""></audio>
+            </p>
+            <p>AdaINVC</p>
+            <p>
+                <audio src="AdaINVC/source_p316_target_p343.wav" controls="" preload=""></audio>
+            </p>
+            <p>INGAN</p>
+            <p>
+                <audio src="INGAN/source_p316_target_p343.wav" controls="" preload=""></audio>
+            </p>
+        </td>
+    </tr>
+    <tr>
+        <td style="vertical-align: top">
+            <p>p326</p>
+            <p>
+                <audio src="unseen/p326_077.wav" controls="" preload=""></audio>
+            </p>
+        </td>
+        <td style="vertical-align: top">
+            <p>p303</p>
+            <p>
+                <audio src="unseen/p303_004.wav" controls="" preload=""></audio>
+            </p>
+        </td>
+        <td style="vertical-align: top">
+            <p>AutoVC</p>
+            <p>
+                <audio src="AutoVC/source_p326_target_p303.wav" controls="" preload=""></audio>
+            </p>
+            <p>VQVC+</p>
+            <p>
+                <audio src="VQVC/source_p326_target_p303.wav" controls="" preload=""></audio>
+            </p>
+            <p>AdaINVC</p>
+            <p>
+                <audio src="AdaINVC/source_p326_target_p303.wav" controls="" preload=""></audio>
+            </p>
+            <p>INGAN</p>
+            <p>
+                <audio src="INGAN/source_p326_target_p303.wav" controls="" preload=""></audio>
+            </p>
+        </td>
+    </tr>
+    <tr>
+        <td style="vertical-align: top">
+            <p>p343</p>
+            <p>
+                <audio src="unseen/p343_386.wav" controls="" preload=""></audio>
+            </p>
+        </td>
+        <td style="vertical-align: top">
+            <p>p260</p>
+            <p>
+                <audio src="unseen/p260_028.wav" controls="" preload=""></audio>
+            </p>
+        </td>
+        <td style="vertical-align: top">
+            <p>AutoVC</p>
+            <p>
+                <audio src="AutoVC/source_p343_target_p260.wav" controls="" preload=""></audio>
+            </p>
+            <p>VQVC+</p>
+            <p>
+                <audio src="VQVC/source_p343_target_p260.wav" controls="" preload=""></audio>
+            </p>
+            <p>AdaINVC</p>
+            <p>
+                <audio src="AdaINVC/source_p343_target_p260.wav" controls="" preload=""></audio>
+            </p>
+            <p>INGAN</p>
+            <p>
+                <audio src="INGAN/source_p343_target_p260.wav" controls="" preload=""></audio>
+            </p>
+        </td>
+    </tr>
+    <tr>
+        <td style="vertical-align: top">
+            <p>p361</p>
+            <p>
+                <audio src="unseen/p361_279.wav" controls="" preload=""></audio>
+            </p>
+        </td>
+        <td style="vertical-align: top">
+            <p>p282</p>
+            <p>
+                <audio src="unseen/p282_017.wav" controls="" preload=""></audio>
+            </p>
+        </td>
+        <td style="vertical-align: top">
+            <p>AutoVC</p>
+            <p>
+                <audio src="AutoVC/source_p361_target_p282.wav" controls="" preload=""></audio>
+            </p>
+            <p>VQVC+</p>
+            <p>
+                <audio src="VQVC/source_p361_target_p282.wav" controls="" preload=""></audio>
+            </p>
+            <p>AdaINVC</p>
+            <p>
+                <audio src="AdaINVC/source_p361_target_p282.wav" controls="" preload=""></audio>
+            </p>
+            <p>INGAN</p>
+            <p>
+                <audio src="INGAN/source_p361_target_p282.wav" controls="" preload=""></audio>
+            </p>
+        </td>
+    </tr>
+    <tr>
+        <td style="vertical-align: top">
+            <p>p362</p>
+            <p>
+                <audio src="unseen/p362_081.wav" controls="" preload=""></audio>
+            </p>
+        </td>
+        <td style="vertical-align: top">
+            <p>p229</p>
+            <p>
+                <audio src="unseen/p229_137.wav" controls="" preload=""></audio>
+            </p>
+        </td>
+        <td style="vertical-align: top">
+            <p>AutoVC</p>
+            <p>
+                <audio src="AutoVC/source_p362_target_p229.wav" controls="" preload=""></audio>
+            </p>
+            <p>VQVC+</p>
+            <p>
+                <audio src="VQVC/source_p362_target_p229.wav" controls="" preload=""></audio>
+            </p>
+            <p>AdaINVC</p>
+            <p>
+                <audio src="AdaINVC/source_p362_target_p229.wav" controls="" preload=""></audio>
+            </p>
+            <p>INGAN</p>
+            <p>
+                <audio src="INGAN/source_p362_target_p229.wav" controls="" preload=""></audio>
+            </p>
+        </td>
+    </tr>
+
+
+    </tbody>
+</table>
+
+<tbdiv id="picinpicBtn"></tbdiv>
+<tbdiv id="playerControlBtn"></tbdiv>
+<tbdiv id="leftFullStackButton"></tbdiv>
+<tbdiv id="rightFullStackButton"></tbdiv>
+</body>
+</html>
