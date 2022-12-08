@@ -206,7 +206,7 @@
 
 <section id="hero-spot" class="hero-spot">
     <h2>&VeryThinSpace;</h2>
-    <h1><strong>INGAN DEMO</strong></h1>
+    <h1><strong>MD-VC DEMO</strong></h1>
     <h2>&VeryThinSpace;</h2>
     <h2></h2>
     <br>
@@ -218,14 +218,15 @@
 <h2 class="separate" style="color:#1196EE">Abstract</h2>
 <br>
 <h3 class="separate">
-    &nbsp;&nbsp;&nbsp;&nbsp;Voice Conversion(VC) has received a lot of attention and research, especially in zero-shot many-to-many voice
-    conversion. Recently, AdaIN-VC has implemented one-hot conversion by a variational autoencoder framework with
-    content and timbre encoders, but the framework does not convert well in the face of unseen speakers. In this paper,
-    we use instance normalization to complete the separation of timbre and content and introduce a generative
-    adversarial network to synthesize the new speech. We use speaker embedding as the input of timbre to achieve
-    zero-shot voice conversion. We also use a multi-discriminator model to train adversarially on timbre and
-    reconstructed samples separately to enhance the conversion quality. Our experiments show that our framework has very
-    satisfying results on unseen speakers.
+    &nbsp;&nbsp;&nbsp;&nbsp;Recently, Voice Conversion(VC) has received a lot of attention and research, especially the
+    zero-shot many-to-many voice conversion.
+    Many VC systems have been proposed to implement zero-shot conversion using an autoencoder framework with extracted
+    timbre and content encoders. However, they do not convert well when confronted with an unseen speaker.
+    To solve the problem, we propose an MD-VC model which introduces multiple discriminators based on generative
+    adversarial networks.
+    It improves the conversion quality through adversarial training.
+    Both objective and subjective comparison experiments show that our model indeed outperforms other models, including
+    Auto-VC, VQVC, and AdaIN-VC, on unseen speakers.
 </h3>
 <p></p>
 <br>
